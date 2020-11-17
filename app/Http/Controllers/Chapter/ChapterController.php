@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Chapter;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chapter;
 use Illuminate\Http\Request;
 
 class ChapterController extends Controller
@@ -14,7 +15,8 @@ class ChapterController extends Controller
      */
     public function index()
     {
-        //
+        $chapters = Chapter::orderBy('created_at','DESC')->paginate(5);
+        return view('admin.chapter.chapter',compact('chapters'));
     }
 
     /**

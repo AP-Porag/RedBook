@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Story;
 
 use App\Http\Controllers\Controller;
+use App\Models\Story;
 use Illuminate\Http\Request;
 
 class StoryController extends Controller
@@ -14,7 +15,8 @@ class StoryController extends Controller
      */
     public function index()
     {
-        //
+        $stories = Story::orderBy('created_at','DESC')->paginate(5);
+        return view('admin.story.story',compact('stories'));
     }
 
     /**

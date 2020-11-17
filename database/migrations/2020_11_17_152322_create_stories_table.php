@@ -15,7 +15,14 @@ class CreateStoriesTable extends Migration
     {
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
+            $table->integer('category_id');
+            $table->integer('type_id');
+            $table->string('name')->unique();
+            $table->string('slug');
+            $table->string('thumbnail');
+            $table->text('story');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Type;
 
 use App\Http\Controllers\Controller;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
@@ -14,7 +15,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::orderBy('created_at','DESC')->paginate(5);
+        return view('admin.type.type',compact('types'));
     }
 
     /**

@@ -28,7 +28,7 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-light navbar-light">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -114,6 +114,12 @@
                     </a>
                     <div class="dropdown-divider"></div>
                     <div class="text-center">
+                        <a class="dropdown-item" href="{{ route('update-profile',[Auth::user()->id])}}">
+                            Update Profile + {{Auth::user()->id}}
+                        </a>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="text-center">
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -131,12 +137,12 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-danger elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
             <img src="{{asset('admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo"
                  class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light text-danger">{{config('app.name')}}</span>
+            <span class="brand-text font-weight-light text-white">{{config('app.name')}}</span>
         </a>
 
         <!-- Sidebar -->
@@ -203,6 +209,57 @@
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-clipboard-list"></i>
+                            <p>
+                                Type
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('type.index')}}" class="nav-link">
+                                    <i class="fa fa-list nav-icon"></i>
+                                    <p>Type List</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-clipboard-list"></i>
+                            <p>
+                                Story
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('story.index')}}" class="nav-link">
+                                    <i class="fa fa-list nav-icon"></i>
+                                    <p>Story List</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-clipboard-list"></i>
+                            <p>
+                                Chapter
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('chapter.index')}}" class="nav-link">
+                                    <i class="fa fa-list nav-icon"></i>
+                                    <p>Chapter List</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-tags"></i>
                             <p>
                                 Tag
@@ -214,23 +271,6 @@
                                 <a href="{{route('tag.index')}}" class="nav-link">
                                     <i class="fa fa-list nav-icon"></i>
                                     <p>Tag List</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-blog"></i>
-                            <p>
-                                Post
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('post.index')}}" class="nav-link">
-                                    <i class="fa fa-list nav-icon"></i>
-                                    <p>Post List</p>
                                 </a>
                             </li>
                         </ul>
@@ -283,7 +323,32 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @yield('content')
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0 text-dark">@yield('title')</h1>
+                            </div><!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+                                    <li class="breadcrumb-item active text-capitalize">@yield('breadcrumb-name')</li>
+                                </ol>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @yield('content')
+            </div>
+        </div>
     </div>
     <!-- /.content-wrapper -->
 

@@ -27,7 +27,11 @@ Route::group(['prefix' => 'admin','middleware' => ['auth']],function (){
         return view('admin.dashboard.index');
     })->name('dashboard');
 
-    Route::resource('category','CategoryController');
-    Route::resource('tag','TagController');
-    Route::resource('post','PostController');
+    Route::resource('category','Category\CategoryController');
+    Route::resource('type','Type\TypeController');
+    Route::resource('story','Story\StoryController');
+    Route::resource('chapter','Chapter\ChapterController');
+    Route::resource('tag','Tag\TagController');
+    Route::get('/update-profile/{id}','User\UserController@edit')->name('update-profile');
+    Route::put('/update-profile/{id}','User\UserController@update')->name('user-update');
 });
