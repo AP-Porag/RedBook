@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    User
+    User profile
 @endsection
 
 @section('breadcrumb-name')

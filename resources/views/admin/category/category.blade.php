@@ -43,7 +43,7 @@
                                                 <td>{{$category->id}}</td>
                                                 <td>{{$category->name}}</td>
                                                 <td>{{$category->slug}}</td>
-                                                <td>13</td>
+                                                <td>{{$category->stories->count()}}</td>
                                                 <td>
                                                     <div class="image" style="width: 120px;">
                                                         <img src="{{$category->background}}" alt="{{$category->name}}" class="img-fluid">
