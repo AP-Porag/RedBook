@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Category;
+use App\Models\StoryTags;
 use App\Models\Type;
 use App\Models\Story;
 use App\Models\Chapter;
@@ -72,5 +73,12 @@ $factory->define(Tag::class, function (Faker $faker) {
     return [
         'name' => $faker->unique()->word(),
         'slug' => $faker->unique()->slug,
+    ];
+});
+
+$factory->define(StoryTags::class, function (Faker $faker) {
+    return [
+        'story_id'=>rand(1,50),
+        'tag_id'=>rand(1,12),
     ];
 });

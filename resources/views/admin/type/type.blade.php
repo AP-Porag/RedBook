@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
 @section('title')
-    Tag
+    Type
 @endsection
 
 @section('breadcrumb-name')
-    Tag List
+    Type List
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
                         <div class="card-header border-2">
                             <div class="d-flex justify-content-between">
                                 <h3 class="card-title">@yield('breadcrumb-name')</h3>
-                                <a href="{{route('tag.create')}}" class="btn btn-outline-danger">Create @yield('title')</a>
+                                <a href="{{route('category.create')}}" class="btn btn-outline-danger">Create @yield('title')</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -31,29 +31,26 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Slug</th>
-                                        <th>Used</th>
                                         <th>Story Count</th>
+                                        <th>Description</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if($tags->count())
-                                        @foreach($tags as $tag)
+                                    @if($types->count())
+                                        @foreach($types as $type)
                                             <tr>
-                                                <td>{{$tag->id}}</td>
-                                                <td>{{$tag->name}}</td>
-                                                <td>{{$tag->slug}}</td>
+                                                <td>{{$type->id}}</td>
+                                                <td>{{$type->name}}</td>
+                                                <td>{{$type->slug}}</td>
+                                                <td>{{$type->stories->count()}}</td>
                                                 <td>
-                                                    <p class="text-right text-danger">{{($tag->stories->count()/$story->count())*100}}%</p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{($tag->stories->count()/$story->count())*100}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
+                                                    <p>{{$type->description}}</p>
                                                 </td>
-                                                <td>{{$tag->stories->count()}}</td>
                                                 <td class="text-center d-flex">
-                                                    <a href="{{route('tag.show',[$tag->id])}}" class="btn btn-info btn-sm mr-3"><i class="fa fa-eye"></i></a>
-                                                    <a href="{{route('tag.edit',[$tag->id])}}" class="btn btn-warning btn-sm mr-3"><i class="fa fa-edit"></i></a>
-                                                    <form action="{{route('tag.destroy',[$tag->id])}}" method="post">
+                                                    <a href="{{route('type.show',[$type->id])}}" class="btn btn-info btn-sm mr-3"><i class="fa fa-eye"></i></a>
+                                                    <a href="{{route('type.edit',[$type->id])}}" class="btn btn-warning btn-sm mr-3"><i class="fa fa-edit"></i></a>
+                                                    <form action="{{route('type.destroy',[$type->id])}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
@@ -75,7 +72,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="pagination justify-content-end">
-                                {{$tags->links()}}
+                                {{$types->links()}}
                             </div>
                         </div>
                     </div>

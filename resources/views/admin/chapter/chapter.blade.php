@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
 @section('title')
-    Tag
+    Chapter
 @endsection
 
 @section('breadcrumb-name')
-    Tag List
+    Chapter List
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
                         <div class="card-header border-2">
                             <div class="d-flex justify-content-between">
                                 <h3 class="card-title">@yield('breadcrumb-name')</h3>
-                                <a href="{{route('tag.create')}}" class="btn btn-outline-danger">Create @yield('title')</a>
+                                <a href="{{route('chapter.create')}}" class="btn btn-outline-danger">Create @yield('title')</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -29,31 +29,35 @@
                                     <thead class="bg-gradient-danger">
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Slug</th>
-                                        <th>Used</th>
-                                        <th>Story Count</th>
+                                        <th>Story</th>
+                                        <th>Story</th>
+                                        <th>Tags</th>
+                                        <th>Thumbnail</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if($tags->count())
-                                        @foreach($tags as $tag)
+                                    @if($chapters->count())
+                                        @foreach($chapters as $chapter)
                                             <tr>
-                                                <td>{{$tag->id}}</td>
-                                                <td>{{$tag->name}}</td>
-                                                <td>{{$tag->slug}}</td>
+                                                <td>{{$chapter->id}}</td>
+                                                <td>{{Str::limit($chapter->storyName->name,20)}}</td>
+
+                                                <td>{{ Str::limit($chapter->story, 50)}}</td>
                                                 <td>
-                                                    <p class="text-right text-danger">{{($tag->stories->count()/$story->count())*100}}%</p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{($tag->stories->count()/$story->count())*100}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    @foreach($chapter->storyName->tags as $tag)
+                                                        <span class="badge badge-primary">{{$tag->name}}</span>
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    <div class="image" style="width: 120px;">
+                                                        <img src="{{$chapter->storyName->thumbnail}}" alt="{{$chapter->name}}" class="img-fluid">
                                                     </div>
                                                 </td>
-                                                <td>{{$tag->stories->count()}}</td>
                                                 <td class="text-center d-flex">
-                                                    <a href="{{route('tag.show',[$tag->id])}}" class="btn btn-info btn-sm mr-3"><i class="fa fa-eye"></i></a>
-                                                    <a href="{{route('tag.edit',[$tag->id])}}" class="btn btn-warning btn-sm mr-3"><i class="fa fa-edit"></i></a>
-                                                    <form action="{{route('tag.destroy',[$tag->id])}}" method="post">
+                                                    <a href="{{route('chapter.show',[$chapter->id])}}" class="btn btn-info btn-sm mr-3"><i class="fa fa-eye"></i></a>
+                                                    <a href="{{route('chapter.edit',[$chapter->id])}}" class="btn btn-warning btn-sm mr-3"><i class="fa fa-edit"></i></a>
+                                                    <form action="{{route('chapter.destroy',[$chapter->id])}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
@@ -75,7 +79,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="pagination justify-content-end">
-                                {{$tags->links()}}
+                                {{$chapters->links()}}
                             </div>
                         </div>
                     </div>

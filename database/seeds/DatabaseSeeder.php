@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\StoryTags;
 use App\Models\Type;
 use App\Models\Story;
 use App\Models\Chapter;
@@ -25,5 +26,6 @@ class DatabaseSeeder extends Seeder
         factory(Story::class,50)->create();
         factory(Chapter::class,55)->create();
         factory(Tag::class,12)->create();
+        factory(StoryTags::class,170)->create();
     }
 }

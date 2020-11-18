@@ -20,6 +20,13 @@ class CreateTagsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        Schema::create('story_tags', function (Blueprint $table) {
+            $table->integer('story_id');
+            $table->integer('tag_id');
+            $table->timestamps();
+            $table->softDeletes();
+
+        });
     }
 
     /**
@@ -30,5 +37,6 @@ class CreateTagsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('tags');
+        Schema::dropIfExists('story_tags');
     }
 }
