@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Story;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Story;
+use App\Models\Tag;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class StoryController extends Controller
@@ -26,7 +29,10 @@ class StoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $types = Type::all();
+        $tags = Tag::all();
+        return view('admin.story.story-create',compact('tags','categories','types'));
     }
 
     /**
@@ -37,7 +43,7 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response($request->all());
     }
 
     /**

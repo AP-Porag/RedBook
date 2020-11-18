@@ -15,6 +15,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="{{asset('admin/dist/css/adminlte.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    @yield('style')
 </head>
 <!--
 `body` tag options:
@@ -26,7 +28,7 @@
   * sidebar-mini
 -->
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
+<div class="wrapper" id="">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-light navbar-light">
         <!-- Left navbar links -->
@@ -335,6 +337,7 @@
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('dashboard')}}">@yield('before-path')</a></li>
                                     <li class="breadcrumb-item active text-capitalize">@yield('breadcrumb-name')</li>
                                 </ol>
                             </div><!-- /.col -->
@@ -360,13 +363,15 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+        <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">Red Book</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 3.1.0-pre
+            <b>Version</b> 1.1.0-pre
         </div>
     </footer>
 </div>
+<script src="{{asset('js/app.js')}}"></script>
+@yield('script')
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->

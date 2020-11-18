@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         factory(User::class,10)->create();
         factory(Category::class,15)->create();
-        factory(Type::class,7)->create();
+        //factory(Type::class,7)->create();
         factory(Story::class,50)->create();
         factory(Chapter::class,55)->create();
         factory(Tag::class,12)->create();

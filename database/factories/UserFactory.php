@@ -42,13 +42,13 @@ $factory->define(Category::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Type::class, function (Faker $faker) {
-    return [
-        'name' => $faker->unique()->word(),
-        'slug' => $faker->unique()->slug,
-        'description' => $faker->sentence(),
-    ];
-});
+//$factory->define(Type::class, function (Faker $faker) {
+//    return [
+//        'name' => $faker->unique()->word(),
+//        'slug' => $faker->unique()->slug,
+//        'description' => $faker->sentence(),
+//    ];
+//});
 
 $factory->define(Story::class, function (Faker $faker) {
     return [
