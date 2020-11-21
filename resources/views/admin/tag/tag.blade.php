@@ -31,8 +31,8 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Slug</th>
-                                        <th>Used</th>
-                                        <th>Story Count</th>
+                                        <th class="text-center">Used</th>
+                                        <th class="text-center">Story Count</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                     </thead>
@@ -44,20 +44,24 @@
                                                 <td>{{$tag->name}}</td>
                                                 <td>{{$tag->slug}}</td>
                                                 <td>
-                                                    <p class="text-right text-danger">{{($tag->stories->count()/$story->count())*100}}%</p>
+                                                    <P class="text-right text-danger">{{number_format((float)(($tag->stories->count()/$story->count())*100), 2, '.', '')}}  <span class="text-dark">%</span></P>
                                                     <div class="progress">
                                                         <div class="progress-bar bg-danger" role="progressbar" style="width: {{($tag->stories->count()/$story->count())*100}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </td>
-                                                <td>{{$tag->stories->count()}}</td>
-                                                <td class="text-center d-flex">
-                                                    <a href="{{route('tag.show',[$tag->id])}}" class="btn btn-info btn-sm mr-3"><i class="fa fa-eye"></i></a>
-                                                    <a href="{{route('tag.edit',[$tag->id])}}" class="btn btn-warning btn-sm mr-3"><i class="fa fa-edit"></i></a>
-                                                    <form action="{{route('tag.destroy',[$tag->id])}}" method="post">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                                                    </form>
+                                                <td class="text-center">{{$tag->stories->count()}}</td>
+                                                <td class="text-center d-flex justify-content-center">
+                                                    <div class="text-center">
+                                                        <a href="{{route('tag.show',[$tag->id])}}" class="btn btn-info btn-sm mr-3"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{route('tag.edit',[$tag->id])}}" class="btn btn-warning btn-sm mr-3"><i class="fa fa-edit"></i></a>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <form action="{{route('tag.destroy',[$tag->id])}}" method="post">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach

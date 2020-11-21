@@ -52,8 +52,9 @@ $factory->define(Category::class, function (Faker $faker) {
 
 $factory->define(Story::class, function (Faker $faker) {
     return [
+        'user_id'=>rand(2,15),
         'category_id'=>rand(1,15),
-        'type_id'=>rand(1,7),
+        'type_id'=>rand(1,5),
         'name' => $faker->unique()->sentence(),
         'slug' => $faker->unique()->slug,
         'thumbnail' => $faker->imageUrl(),

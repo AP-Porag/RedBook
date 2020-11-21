@@ -28,4 +28,33 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
-});
+    data: function () {
+        return {
+            type:null,
+            show:false,
+            imagePreview:null,
+            image: '',
+        }
+    },
+    mounted() {
+        //this.onChange();
+    },
+    methods: {
+        onChange(event) {
+            let type_value = event.target.value;
+            console.log(this.type)
+            if (type_value != null){
+                this.show = true;
+                this.type = type_value;
+            }
+        },
+        imageSelected(e){
+            this.image = e.target.files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL(this.image);
+            reader.onload = e =>{
+                this.imagePreview = e.target.result;
+            };
+        },
+    }
+})

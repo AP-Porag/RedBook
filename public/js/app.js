@@ -49754,7 +49754,39 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webp
  */
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  el: '#app'
+  el: '#app',
+  data: function data() {
+    return {
+      type: null,
+      show: false,
+      imagePreview: null,
+      image: ''
+    };
+  },
+  mounted: function mounted() {//this.onChange();
+  },
+  methods: {
+    onChange: function onChange(event) {
+      var type_value = event.target.value;
+      console.log(this.type);
+
+      if (type_value != null) {
+        this.show = true;
+        this.type = type_value;
+      }
+    },
+    imageSelected: function imageSelected(e) {
+      var _this = this;
+
+      this.image = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(this.image);
+
+      reader.onload = function (e) {
+        _this.imagePreview = e.target.result;
+      };
+    }
+  }
 });
 
 /***/ }),

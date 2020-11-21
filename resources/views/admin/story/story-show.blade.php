@@ -1,59 +1,113 @@
 @extends('layouts.admin')
-@section('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Category</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Admin</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('category.index')}}">Category List</a></li>
-                        <li class="breadcrumb-item active text-capitalize">Category Details</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
+@section('title')
+    Story
+@endsection
+@section('before-path')
+    Story List
+@endsection
+@section('breadcrumb-name')
+    Show Story
+@endsection
+@section('content')
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header border-2 bg-gradient-indigo">
+                        <div class="card-header border-2 bg-gradient-danger">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Details Category - <strong>{{$category->name}}</strong></h3>
-                                <a href="{{route('category.index')}}" class="btn btn-outline-light">Category
-                                    List</a>
+                                <h3 class="card-title">Details @yield('title') - <strong>{{$story->name}}</strong></h3>
+                                <div class="buttons">
+                                    <a href="{{route('story.index')}}" class="btn btn-outline-light">@yield('title')
+                                        List</a>
+                                    <a href="{{route('story.edit',[$story->id])}}" class="btn btn-outline-light">Edit @yield('title')</a>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="d-flex">
+                                        <p><strong class="text-danger">Name : </strong> {{$story->name}}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p><strong class="text-danger">ID : </strong> {{$story->user->name}}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p><strong class="text-danger">@yield('title') : </strong> {{$story->category->name}}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p><strong class="text-danger">Type : </strong> {{$story->type->name}}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p><strong class="text-danger">Create Date : </strong> {{$story->created_at->diffForHumans()}}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        @foreach($story->tags as $tag)
+                                            <span class="badge badge-danger text-md mr-2 p-2">{{$tag->name}}</span>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex">
+                                        <p><strong class="text-danger">Like</strong></p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p><strong class="text-danger">Comment</strong></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3>Story Thumbnail</h3>
+                                        </div>
+                                        <div class="card-img">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <img src="{{$story->thumbnail}}" alt="{{$story->name}}" class="img-fluid">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img src="{{$story->thumbnail}}" alt="{{$story->name}}" class="img-fluid">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <img src="{{$story->thumbnail}}" alt="{{$story->name}}" class="img-fluid">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <img src="{{$story->thumbnail}}" alt="{{$story->name}}" class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img src="{{$story->thumbnail}}" alt="{{$story->name}}" class="img-fluid">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <img src="{{$story->thumbnail}}" alt="{{$story->name}}" class="img-fluid">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <img src="{{$story->thumbnail}}" alt="{{$story->name}}" class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {!! $story->story !!}
+                                </div>
+                            </div>
 
-                            <div class="d-flex">
-                                <p><strong class="text-primary">ID : </strong> {{$category->id}}</p>
-                            </div>
-                            <div class="d-flex">
-                                <p><strong class="text-primary">Name : </strong> {{$category->name}}</p>
-                            </div>
-                            <div class="d-flex">
-                                <p><strong class="text-primary">Slug : </strong> {{$category->slug}}</p>
-                            </div>
-                            <div class="d-flex">
-                                <p><strong class="text-primary">Create Date : </strong> {{$category->created_at->diffForHumans()}}</p>
-                            </div>
-                            <div class="d-flex">
-                                <p><strong class="text-primary">Description : </strong> {{$category->description}}</p>
-                            </div>
 
 
                         </div>
-                        <div class="card-footer bg-gradient-indigo">
-                            <a href="{{route('category.edit',[$category->id])}}" class="btn btn-outline-warning">Edit Category</a>
+                        <div class="card-footer bg-gradient-danger d-flex justify-content-end">
+                            <a href="{{route('story.edit',[$story->id])}}" class="btn btn-outline-light">Edit @yield('title')</a>
                         </div>
                     </div>
                     <!-- /.card -->

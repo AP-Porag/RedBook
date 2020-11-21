@@ -11,7 +11,6 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{asset('admin/dist/css/summernote-bs4.css')}}">
     <style>
 
     </style>
@@ -38,13 +37,13 @@
                                     <form action="{{route('story.store')}}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div class="card-body">
-
                                             <div class="form-row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="category_id">Select Category</label>
                                                         <select name="category_id" id="category_id"
-                                                                class="form-control @error('category_id') is-invalid @enderror">
+                                                                class="form-control @error('category_id') is-invalid @enderror"
+                                                                value="{{ old('name') }}">
                                                             <option value="" selected class="d-none">--Select a
                                                                 Category--
                                                             </option>
@@ -53,7 +52,7 @@
                                                                     value="{{$category->id}}">{{$category->name}}</option>
                                                             @endforeach
                                                         </select>
-                                                        @error('category_id')
+                                                        @error('name')
                                                         <span class="invalid-feedback alert alert-danger" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -63,15 +62,16 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="type_id">Select Type</label>
-                                                        <select name="type_id" id="type_id" @change="onChange($event)" v-model="type"
-                                                                class="form-control @error('type_id') is-invalid @enderror">
+                                                        <select name="type_id" id="category_id"
+                                                                class="form-control @error('category_id') is-invalid @enderror"
+                                                                value="{{ old('name') }}">
                                                             <option value="" selected class="d-none">--Select a Type--
                                                             </option>
                                                             @foreach($types as $type)
                                                                 <option value="{{$type->id}}">{{$type->name}}</option>
                                                             @endforeach
                                                         </select>
-                                                        @error('type_id')
+                                                        @error('name')
                                                         <span class="invalid-feedback alert alert-danger" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -100,7 +100,7 @@
                                                     <div class="form-group">
                                                         <label>Select Tags</label>
                                                         <div class="form-group border p-3">
-                                                            <div class="checkbox @error('tags') is-invalid @enderror">
+                                                            <div class="checkbox">
                                                                 @foreach($tags as $tag)
                                                                     <label class="mr-3">
                                                                         <input value="{{$tag->id}}" type="checkbox"
@@ -109,11 +109,6 @@
                                                                     </label>
                                                                 @endforeach
                                                             </div>
-                                                            @error('tags')
-                                                            <span class="invalid-feedback alert alert-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -122,22 +117,20 @@
                                                  style="max-height: 180px; min-height: 180px;">
                                                 <div class="col-md-3 card"
                                                      style="max-height: 180px; min-height: 180px;">
-                                                    <img src="" alt="" class="img-fluid" id="blah" style="max-height: 180px; min-height: 180px;">
+                                                    <img :src="thumbnail" alt="" class="img-fluid">
                                                     <span class="text-capitalize text-danger"
-                                                    >Upload a Thumbnail for Post</span>
+                                                          :v-if="imagePreview !== null">Upload a Thumbnail for Post</span>
                                                 </div>
                                                 <div class="col-md-9 align-self-end">
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="custom-file">
-                                                                <input type="file" name="image"
-                                                                       class="form-control @error('image') is-invalid @enderror" id="imgInp">
-                                                                @error('image')
-                                                                <span class="invalid-feedback alert alert-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                                @enderror
-
+                                                                <input type="file" @change="imageSelected"
+                                                                       name="thumbnail"
+                                                                       class="custom-file-input custom-file-label"
+                                                                       id="thumbnail">
+                                                                <label class="custom-file-label"
+                                                                       for="thumbnail"></label>
                                                             </div>
                                                             <div class="input-group-append">
                                                                             <span class="input-group-text bg-danger"
@@ -147,29 +140,25 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-row" v-show="show">
-                                                <div class="col-md-12" v-if="type == 1">
-                                                    <div class="form-group">
-                                                        <label for="summery">Write Your Summery</label>
-                                                        <textarea type="text" name="summery"
-                                                                  class="form-control @error('summery') is-invalid @enderror" id="summery"></textarea>
-                                                        @error('summery')
-                                                        <span class="invalid-feedback alert alert-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                        @enderror
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="description">Write Your Summery</label>
+                                                            <textarea type="text" name="summery" rows="7"
+                                                                      class="form-control"
+                                                                      id="description"
+                                                                      placeholder="Enter description"></textarea>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12" v-else>
-                                                    <div class="form-group">
-                                                        <label for="story">Write Your Story</label>
-                                                        <textarea type="text" name="story"
-                                                                  class="form-control @error('story') is-invalid @enderror" id="story"></textarea>
-                                                        @error('story')
-                                                        <span class="invalid-feedback alert alert-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                        @enderror
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="description">Write Your Story</label>
+                                                            <textarea type="text" name="story" rows="7"
+                                                                      class="form-control"
+                                                                      id="description"
+                                                                      placeholder="Enter description"></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -197,39 +186,29 @@
     <!-- /.content -->
 @endsection
 @section('script')
-    <script src="{{asset('admin/dist/js/summernote-bs4.js')}}"></script>
     <script>
-
-        $('#summery').summernote({
-            placeholder: 'Write your summery',
-            tabsize: 2,
-            height: 500
-        });
-        $('#story').summernote({
-            placeholder: 'Write your story',
-            tabsize: 2,
-            height: 500
-        });
-
-
-        $(document).ready(function () {
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        $('#blah').attr('src', e.target.result);
-                    }
-
-                    reader.readAsDataURL(input.files[0]); // convert to base64 string
+        export default {
+            data() {
+                return {
+                    ase:1,
+                    imagePreview: 'null',
+                    thumbnail: '',
                 }
+            },
+            mounted() {
+              this.imageSelected();
+            },
+            methods: {
+                imageSelected(e) {
+                    this.thumbnail = e.target.files[0];
+                    let reader = new FileReader();
+                    reader.readAsDataURL(this.thumbnail);
+                    reader.onload = e => {
+                        this.imagePreview = e.target.result;
+                    };
+                },
             }
-
-            $("#imgInp").change(function () {
-                readURL(this);
-            });
-
-        });
+        }
 
     </script>
 @endsection
